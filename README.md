@@ -5,6 +5,8 @@ JavaScript library for drawing heatmaps with value in every dot, without changin
 Useful for graphical demonstration of value-based data on maps - pollution, population, prices, economics 
 Modified [simpleheat.js](https://github.com/mourner/simpleheat)
 
+Demo: [valueheat.js demo](https://kotia.github.io/valueheat/demo)
+
 ```js
 valueheat('canvas').data(data).draw();
 ```
