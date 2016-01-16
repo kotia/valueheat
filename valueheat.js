@@ -151,17 +151,17 @@ valueheat.prototype = {
     _colorize: function (pixels, gradient) {
         var color, alpha, realColor;
         for (var i = 0, len = pixels.length, j; i < len; i += 4) {
-                color = pixels[i];
-                alpha = pixels[i + 3];
+            color = pixels[i];
+            alpha = pixels[i + 3];
 
-                // convert grey color with alpha to grey color without
-                realColor = 255 - Math.abs(Math.round(((255-color) * alpha / 255)));
+            // convert grey color with alpha to grey color without
+            realColor = 255 - Math.abs(Math.round(((255-color) * alpha / 255)));
 
-                j = (255-realColor)*4;
-                pixels[i] = gradient[j];
-                pixels[i + 1] = gradient[j + 1];
-                pixels[i + 2] = gradient[j + 2];
-                pixels[i + 3] = pixels[i + 3] * this._alpha;
+            j = (255-realColor)*4;
+            pixels[i] = gradient[j];
+            pixels[i + 1] = gradient[j + 1];
+            pixels[i + 2] = gradient[j + 2];
+            pixels[i + 3] = pixels[i + 3] * this._alpha;
         }
     }
 };
