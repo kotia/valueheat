@@ -49,6 +49,11 @@ valueheat.prototype = {
         return this;
     },
 
+    gridSize: function(size) {
+        this._gridSize = Math.abs(Math.round(size));
+        return this;
+    },
+
     cacheCircles: function () {
 
         this._circles  = [];
@@ -116,8 +121,10 @@ valueheat.prototype = {
             powP[1] = Math.floor(p[1]/this._gridSize) * this._gridSize;
             powP[2] = p[2];
             filteredData[powP[0]] = filteredData[powP[0]] || [];
-            if (filteredData[powP[0]][powP[1]] < powP[2] || !filteredData[powP[0]][powP[1]]) {
+            if (filteredData[powP[0]][powP[1]] === undefined) {
                 filteredData[powP[0]][powP[1]] = powP[2];
+            } else {
+                filteredData[powP[0]][powP[1]] = Math.round((filteredData[powP[0]][powP[1]] + powP[2])/2);
             }
         }
 

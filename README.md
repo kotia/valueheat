@@ -54,6 +54,9 @@ heat.alpha(a);
 // set gradient colors as {<stop>: '<color>'}, e.g. {0.4: 'blue', 0.65: 'lime', 1: 'red'}
 heat.gradient(grad);
 
+// set grid size for cashing, default is 1
+heat.gridSize(size);
+
 // call in case Canvas size changed
 heat.resize();
 ```
