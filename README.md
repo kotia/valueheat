@@ -5,7 +5,15 @@ JavaScript library for drawing heatmaps with value in every dot, without changin
 Useful for graphical demonstration of value-based data on maps - pollution, population, prices, economics 
 Modified [simpleheat.js](https://github.com/mourner/simpleheat)
 
+More "hot"(bigger value) dots has priority on "cold" ones.
+File: [valueheat.js](https://kotia.github.io/valueheat/valueheat.js)
 Demo: [valueheat.js demo](https://kotia.github.io/valueheat/demo)
+
+
+In addition - order-oriented value heatmap - where "new" dots has priority, useful for real time reloading data
+File: [valueheat-order.js](https://kotia.github.io/valueheat/valueheat-order.js)
+Demo: [valueheat-order.js demo](https://kotia.github.io/valueheat/demo/index-order.html)
+
 
 ```js
 valueheat('canvas').data(data).draw();

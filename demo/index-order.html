@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>value heat order-oriented</title>
+    <style>
+        body { text-align: center; font: 16px/1.4 "Helvetica Neue", Arial, sans-serif; }
+        a { color: #0077ff; }
+        .container { width: 1000px; height: 600px; margin: 0 auto; position: relative; border: 1px solid #ccc; }
+        .options { position: absolute; top: 0; right: 0; padding: 10px; background: rgba(255,255,255,0.6);
+            border-bottom: 1px solid #ccc; border-left: 1px solid #ccc; line-height: 1; }
+        .options input { width: 200px; }
+        .options label { width: 60px; float: left; text-align: right; margin-right: 10px; color: #555; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="options">
+        <label>Radius </label><input type="range" id="radius" value="25" min="10" max="50" /><br />
+        <label>Alpha </label><input type="range" id="alpha" value="60" min="0" max="100" /><br />
+        <label>Value </label><input type="range" id="value" value="15" min="1" max="255" />
+
+    </div>
+    <canvas id="canvas" width="1000" height="600"></canvas>
+</div>
+
+<script src="../valueheat-order.js"></script>
+<script>
+
+    function get(id) {
+        return document.getElementById(id);
+    }
+
+    var heat = valueheat('canvas').data([]),
+            valueNode = get('value'),
+            radius = get('radius'),
+            alpha = get('alpha'),
+            changeType = 'oninput' in radius ? 'oninput' : 'onchange',
+            value = +valueNode.value,
+
+            frame, isMouseDown;
+
+    function draw() {
+        console.time('draw');
+        heat.draw();
+        console.timeEnd('draw');
+        frame = null;
+    }
+
+    get('canvas').onmousedown = function (e) {
+        isMouseDown = true;
+
+    };
+    get('canvas').onmouseup = get('canvas').onmouseleave = function(e){
+        isMouseDown = false;
+
+    };
+    get('canvas').onmousemove = function(e) {
+        if(isMouseDown){
+            heat.add([e.layerX, e.layerY, value]);
+            frame = frame || window.requestAnimationFrame(draw);
+        }
+
+    };
+
+    alpha[changeType] = function(e) {
+        heat.alpha(+alpha.value/100);
+        frame = frame || window.requestAnimationFrame(draw);
+    };
+
+    radius[changeType] = function (e) {
+        heat.radius(+radius.value);
+        frame = frame || window.requestAnimationFrame(draw);
+    };
+    valueNode[changeType] = function(e){
+        value = +valueNode.value;
+    };
+
+</script>
+</body>
+</html>
