@@ -49,6 +49,11 @@ valueheat.prototype = {
         return this;
     },
 
+    gridSize: function(size) {
+        this._gridSize = Math.abs(Math.round(size));
+        return this;
+    },
+
     cacheCircles: function () {
 
         this._circles  = [];
@@ -116,8 +121,10 @@ valueheat.prototype = {
             powP[1] = Math.floor(p[1]/this._gridSize) * this._gridSize;
             powP[2] = p[2];
             filteredData[powP[0]] = filteredData[powP[0]] || [];
-            if (filteredData[powP[0]][powP[1]] < powP[2] || !filteredData[powP[0]][powP[1]]) {
+            if (filteredData[powP[0]][powP[1]] === undefined) {
                 filteredData[powP[0]][powP[1]] = powP[2];
+            } else {
+                filteredData[powP[0]][powP[1]] = Math.round((filteredData[powP[0]][powP[1]] + powP[2])/2);
             }
         }
 
@@ -144,17 +151,17 @@ valueheat.prototype = {
     _colorize: function (pixels, gradient) {
         var color, alpha, realColor;
         for (var i = 0, len = pixels.length, j; i < len; i += 4) {
-                color = pixels[i];
-                alpha = pixels[i + 3];
+            color = pixels[i];
+            alpha = pixels[i + 3];
 
-                // convert grey color with alpha to grey color without
-                realColor = 255 - Math.abs(Math.round(((255-color) * alpha / 255)));
+            // convert grey color with alpha to grey color without
+            realColor = 255 - Math.abs(Math.round(((255-color) * alpha / 255)));
 
-                j = (255-realColor)*4;
-                pixels[i] = gradient[j];
-                pixels[i + 1] = gradient[j + 1];
-                pixels[i + 2] = gradient[j + 2];
-                pixels[i + 3] = pixels[i + 3] * this._alpha;
+            j = (255-realColor)*4;
+            pixels[i] = gradient[j];
+            pixels[i + 1] = gradient[j + 1];
+            pixels[i + 2] = gradient[j + 2];
+            pixels[i + 3] = pixels[i + 3] * this._alpha;
         }
     }
 };
