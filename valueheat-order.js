@@ -141,7 +141,7 @@ valueheat.prototype = {
         if (!this._radius) this.radius(this.defaultRadius);
         if (!this._grad) this.gradient(this.defaultGradient);
 
-        var ctx = this._ctx, greyVal;
+        var ctx = this._ctx;
         var filteredData = this.filterByGrid(), p;
 
         ctx.clearRect(0, 0, this._width, this._height);
@@ -163,13 +163,15 @@ valueheat.prototype = {
     _colorize: function (pixels, gradient) {
         var color, alpha, realColor;
         for (var i = 0, len = pixels.length, j; i < len; i += 4) {
-            if (pixels[i] > 0) {
+            if (pixels[i+3] > 0) {
                 color = pixels[i];
                 alpha = pixels[i + 3];
 
                 // convert grey color with alpha to grey color without
                 realColor = 255 - Math.abs(Math.round(((255-color) * alpha / 255)));
+
                 j = (255 - realColor) * 4;
+
                 pixels[i] = gradient[j];
                 pixels[i + 1] = gradient[j + 1];
                 pixels[i + 2] = gradient[j + 2];
